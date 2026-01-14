@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Greenwich University Karachi • Chat</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      color: #e2e8f0;
+      background-image: url('/mnt/data/gu_image.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(15, 23, 42, 0.85),
+        rgba(15, 23, 42, 0.95)
+      );
+      backdrop-filter: blur(3px);
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .header {
+      text-align: center;
+      padding: 2rem 0 1.5rem;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    .header p {
+      opacity: 0.9;
+    }
+
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 1rem 1.3rem;
+      border-radius: 1.3rem;
+      line-height: 1.5;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #006644, #004d33);
+      color: white;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 0.8rem;
+      padding: 1rem 0;
+    }
+
+    input {
+      flex: 1;
+      padding: 0.9rem 1.4rem;
+      border-radius: 2rem;
+      border: none;
+      outline: none;
+    }
+
+    button {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: none;
+      background: #006644;
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Greenwich University</h1>
+    <p>Karachi Campus • Your Campus Companion</p>
+  </div>
+
+  <div class="chat-container" id="chatContainer">
+    <div class="message bot">
+      👋 Welcome to Greenwich University Karachi!<br><br>
+      Ask me about programs, fees, campus life, admissions, or facilities.
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input id="userInput" placeholder="Ask about Greenwich University..." />
+    <button onclick="sendMessage()">➤</button>
+  </div>
+
+</div>
+
+<script>
+const chatContainer = document.getElementById('chatContainer');
+const userInput = document.getElementById('userInput');
+
+const info = {
+  fees: `
+<strong>🎓 Undergraduate Programs</strong><br>
+• Registration: PKR 8,300<br>
+• Tuition: PKR 6,905 / credit hour<br>
+• Exam: PKR 580 / credit hour<br>
+• Lab / Sports / Development: PKR 5,800 each<br>
+• Library: PKR 3,500<br><br>
+
+<strong>🎓 Graduate Programs</strong><br>
+• Registration: PKR 10,400<br>
+• Tuition: PKR 8,470 / credit hour<br><br>
+
+<strong>🎓 M.Phil</strong><br>
+• Registration: PKR 11,550<br>
+• Tuition: PKR 11,275 / credit hour<br><br>
+
+<strong>🎓 PhD</strong><br>
+• Registration: PKR 16,600<br>
+• Tuition: PKR 17,015 / credit hour
+  `,
+
+  scholarships: `
+✔ Merit-based scholarships<br>
+✔ Need-based financial aid<br>
+✔ Sports & extracurricular scholarships<br>
+✔ Sibling & faculty discounts<br>
+✔ Fee concessions from 10% up to 100%
+  `
+};
+
+function addMessage(text, type='bot') {
+  const msg = document.createElement('div');
+  msg.className = `message ${type}`;
+  msg.innerHTML = text;
+  chatContainer.appendChild(msg);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+function getReply(q) {
+  q = q.toLowerCase();
+
+  if (q.includes('fee') || q.includes('fees') || q.includes('tuition') || q.includes('cost')) {
+    return `<strong>📚 Fee Structure</strong><br><br>${info.fees}<br><br><em>Fees may change. Always confirm with admissions.</em>`;
+  }
+
+  if (q.includes('scholarship') || q.includes('financial')) {
+    return `<strong>🎓 Scholarships & Financial Aid</strong><br><br>${info.scholarships}`;
+  }
+
+  return "Ask me about programs, fees, scholarships, campus, or admissions 😊";
+}
+
+function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  addMessage(text, 'user');
+  userInput.value = '';
+
+  setTimeout(() => {
+    addMessage(getReply(text));
+  }, 700);
+}
+
+userInput.addEventListener('keypress', e => {
+  if (e.key === 'Enter') sendMessage();
+});
+</script>
+</body>
+</html>
