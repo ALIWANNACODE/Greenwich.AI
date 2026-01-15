@@ -1,222 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Greenwich University Karachi • Chat</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Greenwich University Karachi • AI Assistant</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      color: #e2e8f0;
-      background-image: url('/mnt/data/gu_image.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(15, 23, 42, 0.85),
-        rgba(15, 23, 42, 0.95)
-      );
-      backdrop-filter: blur(3px);
-      z-index: 1;
-    }
-
-    .container {
-      position: relative;
-      z-index: 2;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 1rem;
-    }
-
-    .header {
-      text-align: center;
-      padding: 2rem 0 1.5rem;
-    }
-
-    .header h1 {
-      font-size: 2.2rem;
-      font-weight: 600;
-    }
-
-    .header p {
-      opacity: 0.9;
-    }
-
-    .chat-container {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-    }
-
-    .message {
-      max-width: 80%;
-      padding: 1rem 1.3rem;
-      border-radius: 1.3rem;
-      line-height: 1.5;
-      animation: fadeIn 0.4s ease-out;
-    }
-
-    .bot {
-      align-self: flex-start;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-    }
-
-    .user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #006644, #004d33);
-      color: white;
-    }
-
-    .input-area {
-      display: flex;
-      gap: 0.8rem;
-      padding: 1rem 0;
-    }
-
-    input {
-      flex: 1;
-      padding: 0.9rem 1.4rem;
-      border-radius: 2rem;
-      border: none;
-      outline: none;
-    }
-
-    button {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      border: none;
-      background: #006644;
-      color: white;
-      font-size: 1.3rem;
-      cursor: pointer;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  min-height:100vh;
+  color:#e5e7eb;
+  background-image:url('images/gu_image.jpg');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  background:rgba(15,23,42,.92);
+  z-index:0;
+}
+.container{
+  position:relative;
+  z-index:1;
+  max-width:900px;
+  height:100vh;
+  margin:auto;
+  display:flex;
+  flex-direction:column;
+  padding:1rem;
+}
+.header{text-align:center;padding:1.8rem 0}
+.header h1{font-size:2.3rem;font-weight:600}
+.header p{opacity:.9}
+.chat-container{
+  flex:1;
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  padding:1rem 0;
+}
+.message{
+  max-width:82%;
+  padding:1rem 1.4rem;
+  border-radius:1.4rem;
+  line-height:1.55;
+  animation:fade .3s ease;
+}
+.bot{
+  align-self:flex-start;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+}
+.user{
+  align-self:flex-end;
+  background:linear-gradient(135deg,#006644,#004d33);
+  color:white;
+}
+.input-area{
+  display:flex;
+  gap:.7rem;
+  padding:1rem 0;
+}
+input{
+  flex:1;
+  padding:.9rem 1.3rem;
+  border-radius:2rem;
+  border:none;
+  outline:none;
+}
+button{
+  width:54px;height:54px;
+  border-radius:50%;
+  border:none;
+  background:#006644;
+  color:white;
+  font-size:1.3rem;
+  cursor:pointer;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+</style>
 </head>
 
 <body>
 <div class="container">
 
-  <div class="header">
-    <h1>Greenwich University</h1>
-    <p>Karachi Campus • Your Campus Companion</p>
-  </div>
+<div class="header">
+  <h1>Greenwich University</h1>
+  <p>Karachi Campus • AI Campus Assistant</p>
+</div>
 
-  <div class="chat-container" id="chatContainer">
-    <div class="message bot">
-      👋 Welcome to Greenwich University Karachi!<br><br>
-      Ask me about programs, fees, campus life, admissions, or facilities.
-    </div>
+<div class="chat-container" id="chat">
+  <div class="message bot">
+    👋 <strong>Welcome to Greenwich University Karachi!</strong><br><br>
+    I can help you with:
+    <ul>
+      <li>Programs & departments</li>
+      <li>Fee structure</li>
+      <li>Scholarships</li>
+      <li>Admissions</li>
+      <li>Campus facilities</li>
+      <li>Student life</li>
+    </ul>
+    Ask me anything 😊
   </div>
+</div>
 
-  <div class="input-area">
-    <input id="userInput" placeholder="Ask about Greenwich University..." />
-    <button onclick="sendMessage()">➤</button>
-  </div>
+<div class="input-area">
+  <input id="input" placeholder="Ask about Greenwich University..." />
+  <button onclick="send()">➤</button>
+</div>
 
 </div>
 
 <script>
-const chatContainer = document.getElementById('chatContainer');
-const userInput = document.getElementById('userInput');
+const chat=document.getElementById('chat');
+const input=document.getElementById('input');
 
-const info = {
-  fees: `
-<strong>🎓 Undergraduate Programs</strong><br>
+const data={
+about:`
+<strong>🏛 About Greenwich University</strong><br><br>
+Greenwich University Karachi is a private chartered university recognized by HEC Pakistan.
+It offers quality education with industry-oriented programs, experienced faculty, and modern facilities.
+`,
+
+programs:`
+<strong>📘 Academic Programs</strong><br><br>
+<strong>Undergraduate:</strong><br>
+• BS Computer Science<br>
+• BS Software Engineering<br>
+• BS Artificial Intelligence<br>
+• BBA<br>
+• BS Accounting & Finance<br>
+• BS Media Studies<br>
+• BS Psychology<br><br>
+
+<strong>Graduate:</strong><br>
+• MS Computer Science<br>
+• MBA<br>
+• MS Management Sciences<br><br>
+
+<strong>Doctoral:</strong><br>
+• PhD Management Sciences
+`,
+
+fees:`
+<strong>💰 Fee Structure (Approx.)</strong><br><br>
+<strong>Undergraduate:</strong><br>
 • Registration: PKR 8,300<br>
 • Tuition: PKR 6,905 / credit hour<br>
 • Exam: PKR 580 / credit hour<br>
 • Lab / Sports / Development: PKR 5,800 each<br>
 • Library: PKR 3,500<br><br>
 
-<strong>🎓 Graduate Programs</strong><br>
+<strong>Graduate:</strong><br>
 • Registration: PKR 10,400<br>
 • Tuition: PKR 8,470 / credit hour<br><br>
 
-<strong>🎓 M.Phil</strong><br>
+<strong>M.Phil:</strong><br>
 • Registration: PKR 11,550<br>
 • Tuition: PKR 11,275 / credit hour<br><br>
 
-<strong>🎓 PhD</strong><br>
+<strong>PhD:</strong><br>
 • Registration: PKR 16,600<br>
 • Tuition: PKR 17,015 / credit hour
-  `,
+`,
 
-  scholarships: `
+scholarships:`
+<strong>🎓 Scholarships & Financial Aid</strong><br><br>
 ✔ Merit-based scholarships<br>
-✔ Need-based financial aid<br>
+✔ Need-based assistance<br>
 ✔ Sports & extracurricular scholarships<br>
-✔ Sibling & faculty discounts<br>
-✔ Fee concessions from 10% up to 100%
-  `
+✔ Sibling discount<br>
+✔ Faculty & staff discount<br>
+✔ Fee concessions ranging from 10% to 100%
+`,
+
+admissions:`
+<strong>📝 Admissions</strong><br><br>
+• Admissions open twice a year<br>
+• Based on academic background & interview<br>
+• Entry test may apply for some programs<br>
+• Documents required: transcripts, CNIC/B-Form, photographs
+`,
+
+campus:`
+<strong>🏫 Campus Facilities</strong><br><br>
+• Modern classrooms & labs<br>
+• Computer & AI labs<br>
+• Library & digital resources<br>
+• Cafeteria<br>
+• Sports & recreational activities<br>
+• Student societies & events
+`
 };
 
-function addMessage(text, type='bot') {
-  const msg = document.createElement('div');
-  msg.className = `message ${type}`;
-  msg.innerHTML = text;
-  chatContainer.appendChild(msg);
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+function add(msg,type='bot'){
+  const d=document.createElement('div');
+  d.className=`message ${type}`;
+  d.innerHTML=msg;
+  chat.appendChild(d);
+  chat.scrollTop=chat.scrollHeight;
 }
 
-function getReply(q) {
-  q = q.toLowerCase();
-
-  if (q.includes('fee') || q.includes('fees') || q.includes('tuition') || q.includes('cost')) {
-    return `<strong>📚 Fee Structure</strong><br><br>${info.fees}<br><br><em>Fees may change. Always confirm with admissions.</em>`;
-  }
-
-  if (q.includes('scholarship') || q.includes('financial')) {
-    return `<strong>🎓 Scholarships & Financial Aid</strong><br><br>${info.scholarships}`;
-  }
-
-  return "Ask me about programs, fees, scholarships, campus, or admissions 😊";
+function reply(q){
+  q=q.toLowerCase();
+  if(q.includes('fee')) return data.fees;
+  if(q.includes('program')) return data.programs;
+  if(q.includes('scholar')) return data.scholarships;
+  if(q.includes('admission')) return data.admissions;
+  if(q.includes('campus')||q.includes('facility')) return data.campus;
+  if(q.includes('about')||q.includes('greenwich')) return data.about;
+  return "Ask me about programs, fees, scholarships, admissions, or campus 😊";
 }
 
-function sendMessage() {
-  const text = userInput.value.trim();
-  if (!text) return;
-
-  addMessage(text, 'user');
-  userInput.value = '';
-
-  setTimeout(() => {
-    addMessage(getReply(text));
-  }, 700);
+function send(){
+  const t=input.value.trim();
+  if(!t) return;
+  add(t,'user');
+  input.value='';
+  setTimeout(()=>add(reply(t)),600);
 }
 
-userInput.addEventListener('keypress', e => {
-  if (e.key === 'Enter') sendMessage();
+input.addEventListener('keypress',e=>{
+  if(e.key==='Enter') send();
 });
 </script>
 </body>
