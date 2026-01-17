@@ -9,6 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   font-family:'Poppins',sans-serif;
   min-height:100vh;
@@ -18,6 +19,7 @@ body{
   background-position:center;
   background-attachment:fixed;
 }
+
 body::before{
   content:'';
   position:fixed;
@@ -25,6 +27,7 @@ body::before{
   background:rgba(15,23,42,.92);
   z-index:0;
 }
+
 .container{
   position:relative;
   z-index:1;
@@ -35,9 +38,19 @@ body::before{
   flex-direction:column;
   padding:1rem;
 }
-.header{text-align:center;padding:1.8rem 0}
-.header h1{font-size:2.3rem;font-weight:600}
+
+.header{
+  text-align:center;
+  padding:1.8rem 0;
+}
+
+.header h1{
+  font-size:2.3rem;
+  font-weight:600;
+}
+
 .header p{opacity:.9}
+
 .chat-container{
   flex:1;
   overflow-y:auto;
@@ -46,6 +59,7 @@ body::before{
   gap:1rem;
   padding:1rem 0;
 }
+
 .message{
   max-width:82%;
   padding:1rem 1.4rem;
@@ -53,21 +67,25 @@ body::before{
   line-height:1.55;
   animation:fade .3s ease;
 }
+
 .bot{
   align-self:flex-start;
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(8px);
 }
+
 .user{
   align-self:flex-end;
   background:linear-gradient(135deg,#006644,#004d33);
   color:white;
 }
+
 .input-area{
   display:flex;
   gap:.7rem;
   padding:1rem 0;
 }
+
 input{
   flex:1;
   padding:.9rem 1.3rem;
@@ -75,8 +93,10 @@ input{
   border:none;
   outline:none;
 }
+
 button{
-  width:54px;height:54px;
+  width:54px;
+  height:54px;
   border-radius:50%;
   border:none;
   background:#006644;
@@ -84,6 +104,7 @@ button{
   font-size:1.3rem;
   cursor:pointer;
 }
+
 @keyframes fade{
   from{opacity:0;transform:translateY(10px)}
   to{opacity:1;transform:translateY(0)}
@@ -94,51 +115,45 @@ button{
 <body>
 <div class="container">
 
-<div class="header">
-  <h1>Greenwich University</h1>
-  <p>Karachi Campus • AI Campus Assistant</p>
-</div>
-
-<div class="chat-container" id="chat">
-  <div class="message bot">
-    👋 <strong>Welcome to Greenwich University Karachi!</strong><br><br>
-    I can help you with:
-    <ul>
-      <li>Programs & departments</li>
-      <li>Fee structure</li>
-      <li>Scholarships</li>
-      <li>Admissions</li>
-      <li>Campus facilities</li>
-      <li>Student life</li>
-    </ul>
-    Ask me anything 😊
+  <div class="header">
+    <h1>Greenwich University</h1>
+    <p>Karachi Campus • AI Campus Assistant</p>
   </div>
-</div>
 
-<div class="input-area">
-  <input id="input" placeholder="Ask about Greenwich University..." />
-  <button onclick="send()">➤</button>
-</div>
+  <div class="chat-container" id="chat">
+    <div class="message bot">
+      👋 <strong>Welcome to Greenwich University Karachi!</strong><br><br>
+      Ask me about programs, fees, scholarships, admissions, campus life, faculty, or career opportunities.
+    </div>
+  </div>
+
+  <div class="input-area">
+    <input id="input" placeholder="Ask about Greenwich University..." />
+    <button onclick="send()">➤</button>
+  </div>
 
 </div>
 
 <script>
-const chat=document.getElementById('chat');
-const input=document.getElementById('input');
+const chat = document.getElementById('chat');
+const input = document.getElementById('input');
 
-const data={
-about:`
+const data = {
+
+about: `
 <strong>🏛 About Greenwich University</strong><br><br>
 Greenwich University Karachi is a private chartered university recognized by HEC Pakistan.
-It offers quality education with industry-oriented programs, experienced faculty, and modern facilities.
+It focuses on industry-driven education, innovation, research, and professional development.
 `,
 
-programs:`
+programs: `
 <strong>📘 Academic Programs</strong><br><br>
+
 <strong>Undergraduate:</strong><br>
 • BS Computer Science<br>
 • BS Software Engineering<br>
 • BS Artificial Intelligence<br>
+• BS Cyber Security<br>
 • BBA<br>
 • BS Accounting & Finance<br>
 • BS Media Studies<br>
@@ -153,8 +168,9 @@ programs:`
 • PhD Management Sciences
 `,
 
-fees:`
+fees: `
 <strong>💰 Fee Structure (Approx.)</strong><br><br>
+
 <strong>Undergraduate:</strong><br>
 • Registration: PKR 8,300<br>
 • Tuition: PKR 6,905 / credit hour<br>
@@ -172,63 +188,82 @@ fees:`
 
 <strong>PhD:</strong><br>
 • Registration: PKR 16,600<br>
-• Tuition: PKR 17,015 / credit hour
+• Tuition: PKR 17,015 / credit hour<br><br>
+
+<em>Fees are subject to revision. Confirm with admissions.</em>
 `,
 
-scholarships:`
+scholarships: `
 <strong>🎓 Scholarships & Financial Aid</strong><br><br>
 ✔ Merit-based scholarships<br>
-✔ Need-based assistance<br>
+✔ Need-based financial aid<br>
 ✔ Sports & extracurricular scholarships<br>
 ✔ Sibling discount<br>
 ✔ Faculty & staff discount<br>
-✔ Fee concessions ranging from 10% to 100%
+✔ Fee concessions from 10% up to 100%
 `,
 
-admissions:`
+admissions: `
 <strong>📝 Admissions</strong><br><br>
 • Admissions open twice a year<br>
 • Based on academic background & interview<br>
-• Entry test may apply for some programs<br>
-• Documents required: transcripts, CNIC/B-Form, photographs
+• Entry test for selected programs<br>
+• Required documents:<br>
+&nbsp;&nbsp;– Academic transcripts<br>
+&nbsp;&nbsp;– CNIC/B-Form<br>
+&nbsp;&nbsp;– Passport-size photographs
 `,
 
-campus:`
+campus: `
 <strong>🏫 Campus Facilities</strong><br><br>
-• Modern classrooms & labs<br>
+• Smart classrooms<br>
 • Computer & AI labs<br>
-• Library & digital resources<br>
+• Library & e-resources<br>
 • Cafeteria<br>
-• Sports & recreational activities<br>
+• Sports activities<br>
 • Student societies & events
+`,
+
+career: `
+<strong>💼 Career & Industry Support</strong><br><br>
+• Internship opportunities<br>
+• Career counseling<br>
+• Industry collaborations<br>
+• Workshops & seminars<br>
+• Alumni networking
 `
 };
 
-function add(msg,type='bot'){
-  const d=document.createElement('div');
-  d.className=`message ${type}`;
-  d.innerHTML=msg;
-  chat.appendChild(d);
-  chat.scrollTop=chat.scrollHeight;
+function addMessage(text, type='bot'){
+  const div = document.createElement('div');
+  div.className = `message ${type}`;
+  div.innerHTML = text;
+  chat.appendChild(div);
+  chat.scrollTop = chat.scrollHeight;
 }
 
-function reply(q){
-  q=q.toLowerCase();
+function getReply(q){
+  q = q.toLowerCase();
+
   if(q.includes('fee')) return data.fees;
   if(q.includes('program')) return data.programs;
   if(q.includes('scholar')) return data.scholarships;
   if(q.includes('admission')) return data.admissions;
-  if(q.includes('campus')||q.includes('facility')) return data.campus;
-  if(q.includes('about')||q.includes('greenwich')) return data.about;
-  return "Ask me about programs, fees, scholarships, admissions, or campus 😊";
+  if(q.includes('campus') || q.includes('facility')) return data.campus;
+  if(q.includes('career') || q.includes('job')) return data.career;
+  if(q.includes('about') || q.includes('greenwich')) return data.about;
+
+  return "Ask me about programs, fees, scholarships, admissions, campus, or careers 😊";
 }
 
 function send(){
-  const t=input.value.trim();
-  if(!t) return;
-  add(t,'user');
+  const text = input.value.trim();
+  if(!text) return;
+
+  addMessage(text,'user');
   input.value='';
-  setTimeout(()=>add(reply(t)),600);
+
+  setTimeout(()=>addMessage(getReply(text)) ,600);
 }
 
 input.addEventListener('keypress',e=>{
